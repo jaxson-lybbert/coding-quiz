@@ -25,6 +25,27 @@ h2 {
   text-align: center;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.quizButton {
+  align-items: start;
+  display: inline-block;
+  background-color: rgb(26, 26, 196);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  width: 30%;
+}
+
+.quizButton:hover {
+  background-color: rgb(6, 6, 92);
+}
+
 #startButton {
   background-color: rgb(143, 3, 143);
   padding: 5px;

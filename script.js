@@ -1,13 +1,8 @@
-// Add event listener to clear homepage on click of start button
+// DOM Manipulation variable declaration
 
 var startBtn = $("#startButton");
 var mainDisplay = $(".homePage");
-
-startBtn.on("click", function () {
-  mainDisplay.attr("data-state", "hidden");
-  startBtn.css("padding", "0px");
-  mainDisplay.text("");
-});
+var quizDisplay = $(".quizBlock");
 
 // Add array of objects for questions
 var quizQuestions = [
@@ -49,3 +44,26 @@ var quizQuestions = [
     correct: "4. All of the above!",
   },
 ];
+
+// Add event listener to clear homepage on click of start button
+
+startBtn.on("click", function () {
+  startBtn.remove();
+
+  mainDisplay.text(quizQuestions[0].question);
+
+  var displayChoiceEl = $("<ul>");
+  mainDisplay.append(displayChoiceEl);
+
+  for (var i = 0; i < 4; i++) {
+    var createChoiceEl = $("<li>");
+    var createButtonEl = $("<button>");
+
+    createButtonEl.addClass("quizButton");
+    createButtonEl.text(quizQuestions[0].choices[i]);
+    createChoiceEl.append(createButtonEl);
+    displayChoiceEl.append(createChoiceEl);
+  }
+
+  quizDisplay.text("");
+});
