@@ -47,8 +47,10 @@ var quizQuestions = [
   },
 ];
 
-// Add event listener to clear homepage on click of start button
-startBtn.on("click", function () {
+// Add event listener to begin quiz
+startBtn.on("click", startGame);
+
+function startGame() {
   startBtn.remove();
   quizDisplay.text("");
 
@@ -68,28 +70,27 @@ startBtn.on("click", function () {
     displayChoiceEl.append(createChoiceEl);
   }
 
-  if (globalIndex < 5) {
-    var buttonChoice = $(".quizButton");
+  // Checks answer
+  var buttonChoice = $(".quizButton");
+  buttonChoice.on("click", checkCorrectAnswer);
 
-    buttonChoice.on("click", checkCorrectAnswer);
+  // Displays next questions --> Not working properly??
+  buttonChoice.on("click", function () {
+    globalIndex++;
+    mainDisplay.text(quizQuestions[globalIndex].question);
+    var displayChoiceEl = $("<ul>");
+    mainDisplay.append(displayChoiceEl);
+    for (var k = 0; k < 4; k++) {
+      var createChoiceEl = $("<li>");
+      var createButtonEl = $("<button>");
 
-    buttonChoice.on("click", function () {
-      globalIndex++;
-      mainDisplay.text(quizQuestions[globalIndex].question);
-      var displayChoiceEl = $("<ul>");
-      mainDisplay.append(displayChoiceEl);
-      for (var k = 0; k < 4; k++) {
-        var createChoiceEl = $("<li>");
-        var createButtonEl = $("<button>");
-
-        createButtonEl.addClass("quizButton");
-        createButtonEl.text(quizQuestions[globalIndex].choices[k]);
-        createChoiceEl.append(createButtonEl);
-        displayChoiceEl.append(createChoiceEl);
-      }
-    });
-  }
-});
+      createButtonEl.addClass("quizButton");
+      createButtonEl.text(quizQuestions[globalIndex].choices[k]);
+      createChoiceEl.append(createButtonEl);
+      displayChoiceEl.append(createChoiceEl);
+    }
+  });
+}
 
 // Function to check if correct answer has been selected
 function checkCorrectAnswer(e) {
