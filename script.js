@@ -1,10 +1,10 @@
 // DOM Manipulation variable declaration
 
 var startBtn = $("#startButton");
-var buttonChoice = $(".quizButton");
 var mainDisplay = $(".homePage");
 var quizDisplay = $(".quizBlock");
 var scoreTimer = 75;
+var globalIndex = 0;
 
 // Add array of objects for questions
 var quizQuestions = [
@@ -52,7 +52,8 @@ startBtn.on("click", function () {
   startBtn.remove();
   quizDisplay.text("");
 
-  mainDisplay.text(quizQuestions[0].question);
+  // Displays first question
+  mainDisplay.text(quizQuestions[globalIndex].question);
 
   var displayChoiceEl = $("<ul>");
   mainDisplay.append(displayChoiceEl);
@@ -62,13 +63,32 @@ startBtn.on("click", function () {
     var createButtonEl = $("<button>");
 
     createButtonEl.addClass("quizButton");
-    createButtonEl.text(quizQuestions[0].choices[j]);
+    createButtonEl.text(quizQuestions[globalIndex].choices[j]);
     createChoiceEl.append(createButtonEl);
     displayChoiceEl.append(createChoiceEl);
   }
 
-  // Event listener for answer selection
-  buttonChoice.on("click", checkCorrectAnswer);
+  if (globalIndex < 5) {
+    var buttonChoice = $(".quizButton");
+
+    buttonChoice.on("click", checkCorrectAnswer);
+
+    buttonChoice.on("click", function () {
+      globalIndex++;
+      mainDisplay.text(quizQuestions[globalIndex].question);
+      var displayChoiceEl = $("<ul>");
+      mainDisplay.append(displayChoiceEl);
+      for (var k = 0; k < 4; k++) {
+        var createChoiceEl = $("<li>");
+        var createButtonEl = $("<button>");
+
+        createButtonEl.addClass("quizButton");
+        createButtonEl.text(quizQuestions[globalIndex].choices[k]);
+        createChoiceEl.append(createButtonEl);
+        displayChoiceEl.append(createChoiceEl);
+      }
+    });
+  }
 });
 
 // Function to check if correct answer has been selected
@@ -77,7 +97,7 @@ function checkCorrectAnswer(e) {
   var rightOrWrong = $("<h3>");
   rightOrWrong.addClass("result");
 
-  if (choice.innerText == quizQuestions[0].correct) {
+  if (choice.innerText == quizQuestions[globalIndex].correct) {
     rightOrWrong.text("Correct!");
     $("h2").append(rightOrWrong);
   } else {
