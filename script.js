@@ -1,8 +1,10 @@
 // DOM Manipulation variable declaration
 
 var startBtn = $("#startButton");
+var buttonChoice = $(".quizButton");
 var mainDisplay = $(".homePage");
 var quizDisplay = $(".quizBlock");
+var scoreTimer = 75;
 
 // Add array of objects for questions
 var quizQuestions = [
@@ -46,24 +48,41 @@ var quizQuestions = [
 ];
 
 // Add event listener to clear homepage on click of start button
-
 startBtn.on("click", function () {
   startBtn.remove();
+  quizDisplay.text("");
 
   mainDisplay.text(quizQuestions[0].question);
 
   var displayChoiceEl = $("<ul>");
   mainDisplay.append(displayChoiceEl);
 
-  for (var i = 0; i < 4; i++) {
+  for (var j = 0; j < 4; j++) {
     var createChoiceEl = $("<li>");
     var createButtonEl = $("<button>");
 
     createButtonEl.addClass("quizButton");
-    createButtonEl.text(quizQuestions[0].choices[i]);
+    createButtonEl.text(quizQuestions[0].choices[j]);
     createChoiceEl.append(createButtonEl);
     displayChoiceEl.append(createChoiceEl);
   }
 
-  quizDisplay.text("");
+  // Event listener for answer selection
+  buttonChoice.on("click", checkCorrectAnswer);
 });
+
+// Function to check if correct answer has been selected
+function checkCorrectAnswer(e) {
+  var choice = e.target;
+  var rightOrWrong = $("<h3>");
+  rightOrWrong.addClass("result");
+
+  if (choice.innerText == quizQuestions[0].correct) {
+    rightOrWrong.text("Correct!");
+    $("h2").append(rightOrWrong);
+  } else {
+    scoreTimer -= 10;
+    rightOrWrong.text("Wrong!");
+    $("h2").append(rightOrWrong);
+  }
+}
