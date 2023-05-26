@@ -4,6 +4,7 @@ The purpose of this program is to present the user with a list of coding related
 
 ## How to Use:
 Simply launch the app and test your knowledge!
+Here's the link: https://jaxson-lybbert.github.io/coding-quiz/
 
 ## No licenses are associated with this project
 ![image](https://github.com/jaxson-lybbert/coding-quiz/assets/132233010/a0f678d0-66f6-45bb-872a-5ad8a96e10ea)
