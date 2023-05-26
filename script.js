@@ -55,6 +55,10 @@ scoreForm.css("display", "none");
 quizOptions.css("border", "none");
 startBtn.on("click", startGame);
 
+timerEl = $("<p>");
+timerEl.text("Time: " + scoreTimer);
+$("a").append(timerEl);
+
 // Checks answer
 $(".choiceButton").on("click", checkCorrectAnswer);
 
@@ -117,6 +121,7 @@ function checkCorrectAnswer(e) {
     $("h2").append(rightOrWrong);
   } else {
     scoreTimer -= 10;
+    timerEl.text("Time: " + scoreTimer);
     rightOrWrong.text("Wrong!");
     $("h2").append(rightOrWrong);
   }
