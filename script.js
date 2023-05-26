@@ -77,8 +77,7 @@ $(".choiceButton").on("click", function () {
 });
 
 // Score gets saved and can be seen/removed in highscores.html
-submitScore.on("click", function (e) {
-  e.preventDefault();
+submitScore.on("click", function () {
   var userInitials = scoreForm.find("input[type=text]").val();
   localStorage.setItem("User", userInitials);
   localStorage.setItem("Score", scoreTimer);
