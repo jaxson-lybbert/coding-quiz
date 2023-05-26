@@ -2,6 +2,7 @@
 
 var startBtn = $("#startButton");
 var mainDisplay = $(".homePage");
+var quizOptions = $(".choiceButton");
 var quizDisplay = $(".quizBlock");
 var scoreTimer = 75;
 var globalIndex = 0;
@@ -48,48 +49,37 @@ var quizQuestions = [
 ];
 
 // Add event listener to begin quiz
+quizOptions.css("border", "none");
 startBtn.on("click", startGame);
+
+// Checks answer
+$(".choiceButton").on("click", checkCorrectAnswer);
+
+// Displays next questions
+$(".choiceButton").on("click", function () {
+  globalIndex++;
+  mainDisplay.text(quizQuestions[globalIndex].question);
+
+  $(".btn1").text(quizQuestions[globalIndex].choices[0]);
+  $(".btn2").text(quizQuestions[globalIndex].choices[1]);
+  $(".btn3").text(quizQuestions[globalIndex].choices[2]);
+  $(".btn4").text(quizQuestions[globalIndex].choices[3]);
+
+  console.log(globalIndex);
+});
 
 function startGame() {
   startBtn.remove();
   quizDisplay.text("");
+  quizOptions.addClass("quizButton");
 
   // Displays first question
   mainDisplay.text(quizQuestions[globalIndex].question);
 
-  var displayChoiceEl = $("<ul>");
-  mainDisplay.append(displayChoiceEl);
-
-  for (var j = 0; j < 4; j++) {
-    var createChoiceEl = $("<li>");
-    var createButtonEl = $("<button>");
-
-    createButtonEl.addClass("quizButton");
-    createButtonEl.text(quizQuestions[globalIndex].choices[j]);
-    createChoiceEl.append(createButtonEl);
-    displayChoiceEl.append(createChoiceEl);
-  }
-
-  // Checks answer
-  var buttonChoice = $(".quizButton");
-  buttonChoice.on("click", checkCorrectAnswer);
-
-  // Displays next questions --> Not working properly??
-  buttonChoice.on("click", function () {
-    globalIndex++;
-    mainDisplay.text(quizQuestions[globalIndex].question);
-    var displayChoiceEl = $("<ul>");
-    mainDisplay.append(displayChoiceEl);
-    for (var k = 0; k < 4; k++) {
-      var createChoiceEl = $("<li>");
-      var createButtonEl = $("<button>");
-
-      createButtonEl.addClass("quizButton");
-      createButtonEl.text(quizQuestions[globalIndex].choices[k]);
-      createChoiceEl.append(createButtonEl);
-      displayChoiceEl.append(createChoiceEl);
-    }
-  });
+  $(".btn1").text(quizQuestions[globalIndex].choices[0]);
+  $(".btn2").text(quizQuestions[globalIndex].choices[1]);
+  $(".btn3").text(quizQuestions[globalIndex].choices[2]);
+  $(".btn4").text(quizQuestions[globalIndex].choices[3]);
 }
 
 // Function to check if correct answer has been selected
@@ -97,6 +87,8 @@ function checkCorrectAnswer(e) {
   var choice = e.target;
   var rightOrWrong = $("<h3>");
   rightOrWrong.addClass("result");
+
+  $("h2").empty();
 
   if (choice.innerText == quizQuestions[globalIndex].correct) {
     rightOrWrong.text("Correct!");
