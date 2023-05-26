@@ -3,7 +3,9 @@
 var startBtn = $("#startButton");
 var mainDisplay = $(".homePage");
 var quizOptions = $(".choiceButton");
+var submitScore = $(".submitButton");
 var quizDisplay = $(".quizBlock");
+var scoreForm = $(".highScore");
 var scoreTimer = 75;
 var globalIndex = 0;
 
@@ -48,7 +50,8 @@ var quizQuestions = [
   },
 ];
 
-// Add event listener to begin quiz
+// Add event listener to begin quiz (hides form and pre made buttons)
+scoreForm.css("display", "none");
 quizOptions.css("border", "none");
 startBtn.on("click", startGame);
 
@@ -57,15 +60,35 @@ $(".choiceButton").on("click", checkCorrectAnswer);
 
 // Displays next questions
 $(".choiceButton").on("click", function () {
-  globalIndex++;
-  mainDisplay.text(quizQuestions[globalIndex].question);
+  if (globalIndex < 4) {
+    globalIndex++;
+    mainDisplay.text(quizQuestions[globalIndex].question);
 
-  $(".btn1").text(quizQuestions[globalIndex].choices[0]);
-  $(".btn2").text(quizQuestions[globalIndex].choices[1]);
-  $(".btn3").text(quizQuestions[globalIndex].choices[2]);
-  $(".btn4").text(quizQuestions[globalIndex].choices[3]);
+    $(".btn1").text(quizQuestions[globalIndex].choices[0]);
+    $(".btn2").text(quizQuestions[globalIndex].choices[1]);
+    $(".btn3").text(quizQuestions[globalIndex].choices[2]);
+    $(".btn4").text(quizQuestions[globalIndex].choices[3]);
+  } else {
+    // User enters initials and score is saved to local storage
+    $("ul").remove();
+    mainDisplay.text("All done! Your score: " + scoreTimer);
+    scoreForm.css("display", "block");
+  }
+});
 
-  console.log(globalIndex);
+// Score gets saved and can be seen/removed in highscores.html
+submitScore.on("click", function (e) {
+  e.preventDefault();
+  var userInitials = scoreForm.find("input[type=text]").val();
+  localStorage.setItem("User", userInitials);
+  localStorage.setItem("Score", scoreTimer);
+
+  var userName = localStorage.getItem("User");
+  var userScore = localStorage.getItem("Score");
+  var newInfo = $("<li>");
+  newInfo.text(userName + " - " + userScore);
+
+  $(".scoresList").append(newInfo);
 });
 
 function startGame() {

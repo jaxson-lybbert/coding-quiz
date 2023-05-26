@@ -10,6 +10,7 @@
   </head>
   <body>
     <h1 class="homePage">Coding Quiz Challenge</h1>
+    <a href="highscores.html" class="scoreLink">View High Score</a>
     <ul class="quizList">
       <li><button class="choiceButton btn1"></button></li>
       <li><button class="choiceButton btn2"></button></li>
@@ -22,6 +23,11 @@
       seconds!
     </h2>
     <button id="startButton">Start Quiz</button>
+    <form class="highScore">
+      <label for="userInitials">Initials</label>
+      <input type="text" class="userInitials" /><br />
+      <input type="submit" value="Submit" class="submitButton" />
+    </form>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="script.js"></script>
   </body>
